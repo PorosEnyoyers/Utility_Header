@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "CMakeFiles\\Utility_Header.dir\\src\\timer.cpp.obj",
+            "outputs": [
+                "D:\\VS Projects\\Utility_Header\\out\\build\\x64-Debug\\vc140.pdb",
+                "CMakeFiles\\Utility_Header.dir\\src\\timer.cpp.obj.ddi"
+            ],
+            "requires": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "CMakeFiles\\demo.dir\\examples\\test.cpp.obj",
+            "outputs": [
+                "D:\\VS Projects\\Utility_Header\\out\\build\\x64-Debug\\vc140.pdb",
+                "CMakeFiles\\demo.dir\\examples\\test.cpp.obj.ddi"
+            ],
+            "requires": []
+        }
+    ]
+}
