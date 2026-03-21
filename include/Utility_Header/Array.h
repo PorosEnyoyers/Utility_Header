@@ -328,7 +328,6 @@ public:
 	{
 		sort([](const T& x, const T& y) { return x > y; });
 	}
-
 	template<typename Func>
 	void sort(Func operation)
 	{

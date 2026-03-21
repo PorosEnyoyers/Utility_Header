@@ -2,14 +2,15 @@
 	"configurations" : 
 	[
 		{
+			"abstractTargets" : [],
 			"directories" : 
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"jsonFile" : "directory-.-Debug-f6f22219c74102c3da70.json",
 					"minimumCMakeVersion" : 
 					{
-						"string" : "4.0"
+						"string" : "3.20"
 					},
 					"projectIndex" : 0,
 					"source" : ".",
@@ -41,14 +42,14 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "Utility_Header::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Utility_Header-Debug-d091b96ab6514d724c9a.json",
+					"jsonFile" : "target-Utility_Header-Debug-8ba0d61258adb30234cf.json",
 					"name" : "Utility_Header",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "demo::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-demo-Debug-c610db23a28270af0355.json",
+					"jsonFile" : "target-demo-Debug-bdd519011a403d211a9a.json",
 					"name" : "demo",
 					"projectIndex" : 0
 				}
@@ -64,6 +65,6 @@
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 8
+		"minor" : 9
 	}
 }
