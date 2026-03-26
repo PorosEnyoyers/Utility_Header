@@ -51,11 +51,38 @@ public:
 			return *(reinterpret_cast<T*>(temp));
 		}
 	};
-	Iterator begin(){return Iterator(m_data.hook.next);}
-	Iterator end(){return Iterator(&m_data.hook);}
-	Iterator begin() const{return Iterator(const_cast<Hook*>(m_data.hook.next));}
-	Iterator end() const{return Iterator(const_cast<Hook*>(&m_data.hook));}
+	Iterator begin() { return Iterator(m_data.hook.next); }
+	Iterator end() { return Iterator(&m_data.hook); }
+	Iterator begin() const { return Iterator(const_cast<Hook*>(m_data.hook.next)); }
+	Iterator end() const { return Iterator(const_cast<Hook*>(&m_data.hook)); }
 
+	T& front()
+	{ 
+		if (m_length == 0) throw std::logic_error("List is empty!!!");
+		return this->begin().get_data();
+	}
+	T& back() 
+	{ 
+		if (m_length == 0) throw std::logic_error("List is empty!!!");
+		Iterator temp = this->begin();
+		--temp;
+		return temp.get_data();
+	}
+
+	const T& front() const
+	{
+		if (m_length == 0) throw std::logic_error("List is empty!!!");
+		return this->begin().get_data();
+
+	}
+
+	const T& back() const
+	{
+		if (m_length == 0) throw std::logic_error("List is empty!!!");
+		Iterator temp = this->begin();
+		--temp;
+		return temp.get_data();
+	}
 	Data<T>& get_node(Hook* hook_ptr)
 	{
 		char* temp = reinterpret_cast<char*>(hook_ptr) - offsetof(Data<T>, hook);
@@ -71,7 +98,7 @@ public:
 		Hook* temp = &(this->m_data.hook);
 		for (int i{ 0 }; i < length; i++)
 		{
-			Data<T>* new_node = new Data<T>(T {});//Create a new node on heap. Default initialized the data inside the newly created node.
+			Data<T>* new_node = new Data<T>(T{});//Create a new node on heap. Default initialized the data inside the newly created node.
 			new_node->hook.prev = temp;//Point the new_node hook.prev to temp;
 			temp->next = &(new_node->hook);// Point the temp->next to the address of the new_node->m_hook;
 			temp = &(new_node->hook);// Advance them to point to the new node hook.
@@ -91,7 +118,7 @@ public:
 		}
 		auto iter = this->begin();
 		auto list_iter{ begin };
-		for(; list_iter != end; ++list_iter)
+		for (; list_iter != end; ++list_iter)
 		{
 			iter.get_data() = std::move(*list_iter);
 			++iter;
@@ -109,7 +136,7 @@ public:
 	}
 
 	template<std::size_t N>
-	Doubly_Circular_List(std::array<T,N> arr)
+	Doubly_Circular_List(std::array<T, N> arr)
 		: Doubly_Circular_List(arr.begin(), arr.end(), static_cast<int>(arr.size()))
 	{
 	}
@@ -176,7 +203,7 @@ public:
 	}
 
 	//Copy constructor
-	Doubly_Circular_List(const Doubly_Circular_List& list)
+	Doubly_Circular_List(const Doubly_Circular_List& list) : m_data{}, m_length{ 0 }
 	{
 		this->destroy_all_nodes();
 		Iterator list_iter{ list.begin() };
@@ -185,6 +212,7 @@ public:
 			this->push_back(list_iter.get_data());
 			++list_iter;
 		} while (list_iter != list.begin());
+		m_length = list.m_length;
 	}
 	//Move constructor
 	Doubly_Circular_List(Doubly_Circular_List&& list) noexcept : m_data{}, m_length{ 0 }
@@ -205,6 +233,11 @@ public:
 
 	friend std::ostream& operator<<(std::ostream& out, const Doubly_Circular_List& list)
 	{
+		if (list.m_length == 0)
+		{
+			out << "List is empty!!! Nothing to print.";
+			return out;
+		}
 		auto iter{ list.begin() };
 		do
 		{
@@ -228,4 +261,132 @@ public:
 		} while (iter.m_ptr != this->m_data.hook.next);//Terminate the loop if iterator reach the end and loop back to the 1st node.
 		return this->end();
 	}
+	//To use this, the user need to find and provide 2 iterator from the list. Risk are high since if the user provide 2 nodes from a different list, the function will destroy both list.
+	void swap_position(Iterator node1, Iterator node2)
+	{
+		if (node1.m_ptr == node2.m_ptr || node1.m_ptr == nullptr || node2.m_ptr == nullptr || node1 == this->end() || node2 == this->end()) //check if node1 and node2 is the same node, node1 or node2 point to nullptr, node1 or node2 pointing to the sentinel hook.
+		{
+			throw std::logic_error("Can't swap the same node or illegitimate iterators!!!");
+		}
+		if (node1.m_ptr == this->begin().m_ptr || node2.m_ptr == this->begin().m_ptr)
+		{
+			this->m_data.hook.next = (node1.m_ptr == this->begin().m_ptr ? node2.m_ptr : node1.m_ptr);//if user swap included 1st node, we update the sentinel to point to node that will become 1st node.
+		}
+		if (node1.m_ptr->next == node2.m_ptr)//check if they are adjacent because the implementation will be different.
+		{
+			std::swap(node1.m_ptr->next, node2.m_ptr->next);
+			std::swap(node1.m_ptr->prev, node2.m_ptr->prev);
+			node1.m_ptr->prev = node2.m_ptr;
+			node2.m_ptr->next = node1.m_ptr;
+			std::swap(node1.m_ptr->next->prev, node2.m_ptr->prev->next);
+		}
+		else if (node2.m_ptr->next == node1.m_ptr)//check if they are adjacent and node2 comes first so the implementation will be different
+		{
+			std::swap(node1.m_ptr->next, node2.m_ptr->next);
+			std::swap(node1.m_ptr->prev, node2.m_ptr->prev);
+			node2.m_ptr->prev = node1.m_ptr;
+			node1.m_ptr->next = node2.m_ptr;
+			std::swap(node2.m_ptr->next->prev, node1.m_ptr->prev->next);
+		}
+		else
+		{
+			std::swap(node1.m_ptr->next, node2.m_ptr->next);
+			std::swap(node1.m_ptr->prev, node2.m_ptr->prev);
+			//Now we update the adjacent nodes after swapping.
+			node1.m_ptr->next->prev = node1.m_ptr;
+			node1.m_ptr->prev->next = node1.m_ptr;
+			node2.m_ptr->next->prev = node2.m_ptr;
+			node2.m_ptr->prev->next = node2.m_ptr;
+		}
+	}
+
+	//Provide an iterator and move it to 1st node.
+	void swap_to_first(Iterator node)
+	{
+		if (node == this->begin() || node.m_ptr == nullptr || node == this->end())
+		{
+			throw std::logic_error("Already 1st node or illegitimate iterators!!!");
+		}
+		swap_position(this->begin(), node);
+	}
+
+	//Find and move to first node
+	Iterator find_and_swap_to_first(const T& key)
+	{
+		Iterator get_node = find(key);
+		if (get_node == this->end())
+		{
+			return this->end();
+		}
+		if (get_node == this->begin())
+		{
+			return this->begin();
+		}
+		else
+		{
+			swap_position(this->begin(), get_node);
+			return this->begin();
+		}
+	}
+
+	//Remove a node given an iterator.
+	void remove(Iterator node)
+	{
+		if (node.m_ptr == nullptr)
+		{
+			throw std::logic_error("Invalid node!!!");
+		}
+		if (node == this->end())
+		{
+			return;
+		}
+		if (node == this->begin())
+		{
+			if (m_length == 1)
+			{
+				this->m_data.hook.next = nullptr;
+				delete& (get_node(node.m_ptr));
+				--m_length;
+				return;
+			}
+			this->m_data.hook.next = node.m_ptr->next;
+		}
+		node.m_ptr->next->prev = node.m_ptr->prev;
+		node.m_ptr->prev->next = node.m_ptr->next;
+		node.m_ptr->next = nullptr;
+		node.m_ptr->prev = nullptr;
+		delete& (get_node(node.m_ptr));
+		node.m_ptr = nullptr;
+		--m_length;
+	}
+	//Combine find and remove to find a node and remove
+	void find_and_remove(const T& data)
+	{
+		Iterator node = this->find(data);
+		this->remove(node);
+	}
+	//Pop first will remove the 1st node in the list and return the data
+	T pop_first()
+	{
+		if (m_length == 0)
+		{
+			throw std::logic_error("List is empty!!!");
+		}
+		T data = std::move(this->begin().get_data());
+		remove(this->begin());
+		return data;
+	}
+	T pop_last()
+	{
+		if (m_length == 0)
+		{
+			throw std::logic_error("List is empty!!!");
+		}
+		Iterator iter = this->begin();
+		--iter;
+		T data = std::move(iter.get_data());
+		remove(iter);
+		return data;
+	}
 };
+

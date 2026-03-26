@@ -10,6 +10,7 @@
 #include <array>
 #include "Utility_Header/Data_Hook.h"
 #include "Utility_Header/Doubly_Circular_List.h"
+#include "Utility_Header/Stack.h"
 
 //Testing No_Copy header
 class FullName : private No_Copy
@@ -119,45 +120,182 @@ struct ChaosInt {
 	}
 };
 
+bool is_parenthesis_matched(std::string& string, Stack<char>& stack)
+{
+	auto i = string.begin();
+	while (i != string.end())
+	{
+		std::cout << "Loop running \n\n";
+		if (*i == '(')
+			stack.push(*i);
+		else if (*i == ')')
+		{
+			if (stack.is_empty())
+				return false;
+			stack.pop();
+		}
+		++i;
+	}
+	if (stack.is_empty())
+		return true;
+	return false;
+}
+
+bool is_operation(char c)
+{
+	if (c == '+' || c == '-' || c == '/' || c == '*' || c == '^')
+		return true;
+	return false;
+}
+
+bool is_brackets(char c)
+{
+	if (c == '(' || c == ')' || c == '[' || c == ']' || c == '{' || c == '}')
+		return true;
+	return false;
+}
+
+int get_prio_out_stack(char c)
+{
+	switch (c)
+	{
+	case'-':
+		return 1;
+	case'+':
+		return 1;
+	case'*':
+		return 3;
+	case'/':
+		return 3;
+	case'^':
+		return 6;
+	case'(':
+		return 7;
+	case')':
+		return 0;
+	case'[':
+		return 7;
+	case']':
+		return 0;
+	case'{':
+		return 7;
+	case'}':
+		return 0;
+	default:
+		return 8;
+	}
+}
+
+int get_prio_in_stack(char c)
+{
+	switch (c)
+	{
+	case'-':
+		return 2;
+	case'+':
+		return 2;
+	case'*':
+		return 4;
+	case'/':
+		return 4;
+	case'^':
+		return 5;
+	case'(':
+		return 0;
+	case')':
+		return 0;
+	case'{':
+		return 0;
+	case'}':
+		return 0;
+	case'[':
+		return 0;
+	case']':
+		return 0;
+	default:
+		return 8;
+	}
+}
+
+std::string infix_to_postfix(std::string_view string)
+{
+	std::string result{};
+	result.reserve(string.length() + 1);
+	Stack<char> char_stack{};
+	auto iter{ string.begin() };
+	while (iter != string.end())
+	{
+		if ((*iter == ')' || *iter == ']' || *iter == '}') && char_stack.is_empty())
+		{
+			throw std::logic_error("Invalid Expression!!! Can't convert to postfix!!!");
+		}
+		if (*iter == ' ')
+		{
+			iter++;
+			continue;
+		}
+		if (is_operation(*iter) || is_brackets(*iter))
+		{
+			//If stack is empty or current prio is higher than stack top prio, we push it in on top of the stack.
+			if (char_stack.is_empty() || get_prio_out_stack(*iter) > get_prio_in_stack(char_stack.stack_top()))
+			{
+				char_stack.push(*(iter++));
+				continue;
+			}
+			else
+			{
+				//When we encounter a closing bracket, we pop everything then pop the openning bracket then move on.
+				if (*iter == ')' || *iter == ']' || *iter == '}')
+				{
+					while (!char_stack.is_empty() && !is_brackets(char_stack.stack_top()))
+					{
+						result.push_back(char_stack.pop());
+					}
+					if (char_stack.is_empty())
+					{
+						throw std::logic_error("Invalid Expression!!! Can't convert to postfix!!!");
+					}
+					char_stack.pop();
+					++iter;
+				}
+				else
+				{
+					while ((!char_stack.is_empty()) && (get_prio_out_stack(*iter) <= get_prio_in_stack(char_stack.stack_top())))
+					{
+						result.push_back(char_stack.pop());
+					}
+					char_stack.push(*(iter++));
+					continue;
+				}
+			}
+		}
+		else
+		{
+			result.push_back(*(iter++));
+			continue;
+		}
+	}
+	while (!char_stack.is_empty())
+	{
+		if (is_brackets(char_stack.stack_top()))
+		{
+			char_stack.pop();
+			continue;
+		}
+		result.push_back(char_stack.pop());
+	}
+	return result;
+}
+
 int main()
 {
-	//Doubly_List<int> list(10);
-	//auto iter = list.begin();
-	//int i = 0;
-	//do
-	//{
-	//	iter.get_data() = i++;
-	//	++iter;
-	//} while (iter != list.begin());
-	//do
-	//{
-	//	std::cout << iter.get_data() << " ";
-	//	++iter;
-	//} while (iter != list.begin());
-	Doubly_Circular_List<int> list{ std::vector<int> {1,2,43,4,56,3,2,4,5} };
-	std::cout << list << "\n\n";
-	Doubly_Circular_List<double> list1{ 3.4,4.3,24.3,22.1,323.1,23.1,34.5 };
-	std::cout << list1 << "\n\n";
-	Doubly_Circular_List<std::string> list2{ std::array<std::string,5>{"Northernlion", "Cory", "Rust", "James", "Alan"} };
-	std::cout << list2 << "\n\n";
-	Doubly_Circular_List<std::string> list3{ std::move(list2) };
-	std::cout << "Moved list length: " << list2.get_length();
-	list3.insert("Khoi", 2);
-	list3.insert_first("Khoa");
-	list3.push_back("Khue");
-	list2.push_back("Lissan Al Gaib");
-	std::cout << "\n\n" << list3;
-	std::cout << "\n\n" << list2;
-
-	Doubly_Circular_List<int> list4(10);
-	std::cout << "\n\n" << list4;
-	if (list3.find("James") != list3.end())
-	{
-		std::cout << "\n\nFound";
-	}
-	else
-	{
-		std::cout << "\n\nNot Found";
-	}
+	//Demo for stack
+	//std::string expression{ "( a + b ) * ( c - d ))" };
+	//Stack<char> char_stack{};
+	//std::cout << std::boolalpha << is_parenthesis_matched(expression, char_stack);
+	std::string expression1{ "a*b+(c+d)*e" };
+	std::string result{ infix_to_postfix(expression1) };
+	std::cout << result;
+	std::cout << "\n\n";
 	return 0;
 }
