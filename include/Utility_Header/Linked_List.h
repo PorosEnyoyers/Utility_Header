@@ -38,7 +38,6 @@ public:
 			temp = temp->next.get();
 		}
 	}
-	Linked_List(T data) : m_length{ 1 }, m_first{ std::make_unique<Node>(std::move(data),nullptr) }, m_tail_ptr{ nullptr } { std::cout << "\n\n Constructor Called!!"; }
 	/*
 	Logic for the above constructor:
 	1.We create a temp Node pointer that point to the same node as m_first using std::unique_ptr::get().

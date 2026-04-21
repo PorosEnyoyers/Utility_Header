@@ -105,7 +105,14 @@
 			"name" : "Header Files",
 			"sourceIndexes" : 
 			[
-				2
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9
 			]
 		}
 	],
@@ -126,6 +133,41 @@
 		{
 			"backtrace" : 1,
 			"path" : "include/Utility_Header/Stack.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/Queue.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/Utility_Header/Prio_Queue.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/Utility_Header/Binary_Tree.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/Utility_Header/AVL_Tree.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/Utility_Header/B_Tree.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/Utility_Header/Red_Black_Tree.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/Utility_Header/Red_Black_Tree_Ver2.h",
 			"sourceGroupIndex" : 1
 		}
 	],
