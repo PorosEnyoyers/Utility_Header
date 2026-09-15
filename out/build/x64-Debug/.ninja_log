@@ -1,6 +1,25 @@
 # ninja log v6
+8	38	7896732389603031	CMakeFiles/Utility_Header.dir/src/timer.cpp.obj.ddi	ab1ac014f02a4bb0
+23	73	7951981590140009	CMakeFiles/Utility_Header.dir/CXX.dd	e949b315323b66f6
+12	40	7896732389643045	CMakeFiles/Utility_Header.dir/src/file_handle.cpp.obj.ddi	603a923eb8bdf32e
+23	73	7951981590140009	CMakeFiles/Utility_Header.dir/src/timer.cpp.obj.modmap	e949b315323b66f6
+23	73	7951981590140009	CMakeFiles/Utility_Header.dir/CXXModules.json	e949b315323b66f6
+23	73	7951981590140009	CMakeFiles/Utility_Header.dir/src/file_handle.cpp.obj.modmap	e949b315323b66f6
+22	73	7952021909613010	CMakeFiles/Utility_Header.dir/src/file_handle.cpp.obj	1b4162ab3ef31157
+17	74	7952021909575452	CMakeFiles/Utility_Header.dir/src/timer.cpp.obj	d1cad483370fcfc
 39	345	8013009116357069	CMakeFiles/Utility_Header.dir/src/timer.cpp.obj	6cb77bda9142da13
 44	348	8013009116412671	CMakeFiles/Utility_Header.dir/src/file_handle.cpp.obj	5e17d0e9273b1f45
+74	368	7952021910140974	Utility_Header.lib	5cc30972799480ae
 348	431	8013009119449491	Utility_Header.lib	3459bfc6a418678b
+145	167	7896739977789431	CMakeFiles/demo.dir/examples/test.cpp.obj.modmap	5f62c6fd49b40c76
+26	144	7896739976599869	CMakeFiles/demo.dir/examples/test.cpp.obj.ddi	938f017505215a2a
+169	848	7896739978029486	CMakeFiles/demo.dir/examples/test.cpp.obj	f44fb8d8e43e4210
+204	230	7952017147621128	CMakeFiles/demo.dir/CXX.dd	c234112c7d040af1
+204	230	7952017147621128	CMakeFiles/demo.dir/CXXModules.json	c234112c7d040af1
+25	204	7952017145833800	CMakeFiles/demo.dir/examples/demo.cpp.obj.ddi	f682424287dc213c
+204	230	7952017147621128	CMakeFiles/demo.dir/examples/demo.cpp.obj.modmap	c234112c7d040af1
+21	1678	7983235255809496	CMakeFiles/demo.dir/examples/demo.cpp.obj	4b853a4af60cd384
 4	1480	8037479554056406	CMakeFiles/demo.dir/examples/demo.cpp.obj	d30832d61e5f9c1b
+1678	1962	7983235272384989	demo.exe	8ccc9a73ecba65d5
 1483	1673	8037479568844058	demo.exe	9404d07d63325a13
+
