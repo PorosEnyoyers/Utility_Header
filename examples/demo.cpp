@@ -18,6 +18,9 @@
 #include "Utility_Header/AVL_Tree.h"
 #include "Utility_Header/B_Tree.h"
 #include "Utility_Header/Red_Black_Tree_Ver2.h"
+#include "Utility_Header/Circular_Buffer.h"
+#include <utility>
+#include <functional>
 //Testing No_Copy header
 class FullName : private No_Copy
 {
@@ -354,6 +357,22 @@ int get_expr_result(std::string_view expression)//single digit number for now.
 
 int main()
 {
+	circular_buffer<int, 100> a({ 1,2,3,4,5,6,7,8,9,10 });
+	std::vector<int> v;
+	for (auto it : a)
+	{
+		v.push_back(it);
+	}
+	for (auto i : v)
+	{
+		std::cout << i << " ";
+	}
+	std::cout << '\n';
+	std::cout << a;
+	std::cout << '\n';
+	std::cout << v[0] << " " << v[2] << " " << v[6];
+	auto i = v.begin();
+	std::cout << "\n" << *(i + 4);
 	//Demo for stack
 	//std::string expression{ "( a + b ) * ( c - d ))" };
 	//Stack<char> char_stack{};
@@ -434,23 +453,25 @@ int main()
 	//tree.remove(3);
 	//tree.remove(4);
 	//tree.print_inorder();
-	std::vector<int> vect{ 5,6,34,64,434,436,75,4436,533,465,64,34,64,23,54,62 };
-	custom::RB_Tree<int> tree{ vect };
-	std::cout << tree;
-	std::cout << "\n\n\n";
-	int input{};
-	while (true)
-	{
-		if (input == 9999)
-		{
-			break;
-		}
-		std::cout << "\n\nEnter number to delete from tree: ";
-		std::cin >> input;
-		tree.remove(input);
-		std::cout << "\n\n" << tree;
-	}
-	return 0;
+
+	//std::vector<int> vect{ 5,6,34,64,434,436,75,4436,533,465,64,34,64,23,54,62 };
+	//custom::RB_Tree<int> tree{ vect };
+	//std::cout << tree;
+	//std::cout << "\n\n\n";
+	//int input{};
+	//while (true)
+	//{
+	//	if (input == 9999)
+	//	{
+	//		break;
+	//	}
+	//	std::cout << "\n\nEnter number to delete from tree: ";
+	//	std::cin >> input;
+	//	tree.remove(input);
+	//	std::cout << "\n\n" << tree;
+	//}
+	//return 0;
+
 	//custom::AVL_Tree<int> tree{ 102 };
 	//tree.insert(54);
 	//tree.insert(77);
@@ -495,3 +516,72 @@ int main()
 //	}
 //	return 0;
 //}
+
+//template<typename T, typename... Args>
+//std::unique_ptr<T> make_unique(Args&&... args)
+//{
+//	return std::unique_ptr<T>{new T{std::forward<Args>(args)...}};
+//}
+
+
+template <typename T>
+concept mergeable =std::default_initializable<T> && std::is_move_assignable_v<T> && std::move_constructible<T> && requires (T a) { a < a; a > a; };
+
+template <mergeable T, typename Func>
+std::vector<T>& merge_sort(std::vector<T>& source, Func func)
+{
+	if (source.size() < 2) return source;
+	std::vector<T> buffer(source.size());
+	auto* src = &source;
+	auto* dest = &buffer;
+	for (std::size_t width = 1; width < source.size(); width = width * 2)
+	{
+		for (std::size_t low = 0; low < source.size(); low = low + width * 2)
+		{
+			const std::size_t mid = std::min(low + width, source.size());
+			const std::size_t high = std::min(low + width * 2, source.size());
+
+			std::size_t i = low;
+			std::size_t j = mid;
+			std::size_t out = low;
+
+			while (i < mid && j < high)
+			{
+				if (func((*src)[j], (*src)[i]))
+				{
+					(*dest)[out] = std::move((*src)[j]);
+					++out;
+					++j;
+				}
+				else
+				{
+					(*dest)[out] = std::move((*src)[i]);
+					++out;
+					++i;
+				}
+			}
+			while (i < mid)
+			{
+				(*dest)[out] = std::move((*src)[i]);
+				++out; ++i;
+			}
+			while (j < high)
+			{
+				(*dest)[out] = std::move((*src)[j]);
+				++out; ++j;
+			}
+		}
+		std::swap(src, dest);
+	}
+	if (src != &source)
+	{
+		source.swap(*src);
+	}
+	return source;
+}
+
+template <mergeable T>
+std::vector<T>& merge_sort(std::vector<T>& source)
+{
+	return merge_sort(source, [](const T& a,const T& b) {return a < b; });
+}

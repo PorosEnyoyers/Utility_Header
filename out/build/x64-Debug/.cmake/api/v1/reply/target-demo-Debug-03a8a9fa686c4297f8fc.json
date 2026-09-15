@@ -39,32 +39,20 @@
 			}
 		]
 	},
-	"codemodelVersion" : 
-	{
-		"major" : 2,
-		"minor" : 9
-	},
-	"compileDependencies" : 
-	[
-		{
-			"backtrace" : 2,
-			"id" : "Utility_Header::@6890427a1f51a3e7e1df"
-		}
-	],
 	"compileGroups" : 
 	[
 		{
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd"
+					"fragment" : "/DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd"
 				}
 			],
 			"includes" : 
 			[
 				{
 					"backtrace" : 2,
-					"path" : "D:/VS Projects/Utility_Header/include"
+					"path" : "C:/Users/khoip/OneDrive/Desktop/Important/Codes/Utility_Header/include"
 				}
 			],
 			"language" : "CXX",
@@ -95,15 +83,11 @@
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -MDd",
+				"fragment" : "/DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -MDd",
 				"role" : "flags"
 			},
 			{
-				"fragment" : "/machine:x64 /debug /INCREMENTAL",
-				"role" : "flags"
-			},
-			{
-				"fragment" : "/subsystem:console",
+				"fragment" : "/machine:x64 /debug /INCREMENTAL /subsystem:console",
 				"role" : "flags"
 			},
 			{
@@ -118,13 +102,6 @@
 		],
 		"language" : "CXX"
 	},
-	"linkLibraries" : 
-	[
-		{
-			"backtrace" : 2,
-			"id" : "Utility_Header::@6890427a1f51a3e7e1df"
-		}
-	],
 	"name" : "demo",
 	"nameOnDisk" : "demo.exe",
 	"paths" : 
@@ -152,7 +129,8 @@
 				5,
 				6,
 				7,
-				8
+				8,
+				9
 			]
 		}
 	],
@@ -202,6 +180,11 @@
 		{
 			"backtrace" : 1,
 			"path" : "include/Utility_Header/Red_Black_Tree_Ver2.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "include/Utility_Header/Circular_Buffer.h",
 			"sourceGroupIndex" : 1
 		}
 	],

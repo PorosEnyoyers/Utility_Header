@@ -1,5 +1,0 @@
-ninja_dyndep_version = 1.0
-build CMakeFiles\Utility_Header.dir\src\timer.cpp.obj: dyndep
-
-build CMakeFiles\Utility_Header.dir\src\file_handle.cpp.obj: dyndep
-

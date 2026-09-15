@@ -13,8 +13,8 @@
 					"linkFrameworkDirectories" : [],
 					"linkLibraries" : []
 				},
-				"path" : "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.50.35717/bin/Hostx64/x64/cl.exe",
-				"version" : "19.50.35727.0"
+				"path" : "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe",
+				"version" : "19.44.35226.0"
 			},
 			"language" : "CXX",
 			"sourceFileExtensions" : 

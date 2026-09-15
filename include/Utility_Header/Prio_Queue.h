@@ -74,8 +74,8 @@ namespace custom
 			: m_array(prio_queue.m_array), m_size(prio_queue.m_size), m_flag(prio_queue.m_flag)
 		{
 		}
-		//Move and copy assignment
-		[[nodiscard]] Prio_Queue& operator=(Prio_Queue prio_queue) & noexcept
+		//Move assignment
+		[[nodiscard]] Prio_Queue& operator=(Prio_Queue&& prio_queue) & noexcept
 		{
 			std::swap(m_array, prio_queue.m_array);
 			std::swap(m_size, prio_queue.m_size);

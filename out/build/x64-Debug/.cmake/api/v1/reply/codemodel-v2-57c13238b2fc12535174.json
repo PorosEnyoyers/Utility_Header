@@ -2,12 +2,11 @@
 	"configurations" : 
 	[
 		{
-			"abstractTargets" : [],
 			"directories" : 
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-Debug-f6f22219c74102c3da70.json",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.20"
@@ -42,14 +41,14 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "Utility_Header::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Utility_Header-Debug-8d46ff35483b99dcdaf6.json",
+					"jsonFile" : "target-Utility_Header-Debug-3a749c1659625958354a.json",
 					"name" : "Utility_Header",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "demo::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-demo-Debug-bcb970131586c9a31d64.json",
+					"jsonFile" : "target-demo-Debug-03a8a9fa686c4297f8fc.json",
 					"name" : "demo",
 					"projectIndex" : 0
 				}
@@ -59,12 +58,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "D:/VS Projects/Utility_Header/out/build/x64-Debug",
-		"source" : "D:/VS Projects/Utility_Header"
+		"build" : "C:/Users/khoip/OneDrive/Desktop/Important/Codes/Utility_Header/out/build/x64-Debug",
+		"source" : "C:/Users/khoip/OneDrive/Desktop/Important/Codes/Utility_Header"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 9
+		"minor" : 8
 	}
 }

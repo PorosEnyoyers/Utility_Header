@@ -4,6 +4,7 @@
 #include <vector>
 #include <initializer_list>
 #include <utility>
+#include <cstdint>
 
 namespace custom
 {
